@@ -5,11 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Crossword Game</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="game-data.js"></script>
     <style>
         .loading {
             text-align: center;
             padding: 20px;
             color: #4a86e8;
+        }
+        .pixel-button {
+            background: #4a86e8;
+            border: 3px solid #3a76d8;
+            color: white;
+            padding: 10px 20px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .pixel-button:hover {
+            background: #5a96f8;
+        }
+        .board {
+            display: grid;
+            gap: 2px;
+            margin: 20px auto;
+            background: #f0f0f0;
+            padding: 10px;
+            border: 3px solid #333;
+        }
+        .cell {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #999;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .cell input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            text-align: center;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+        .cell-number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 10px;
+            color: #666;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background: white;
+            margin: 15% auto;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            border: 3px solid #333;
         }
     </style>
 </head>
@@ -18,7 +82,7 @@
         <h1>WORD CROSSWORD</h1>
         
         <div class="level-info">
-            <h2>Level <span id="current-level">1</span>: <span id="level-theme">Loading...</span></h2>
+            <h2>Level <span id="current-level">1</span>: <span id="level-theme">Animals</span></h2>
             <p>Difficulty: <span id="level-difficulty">1</span>/5</p>
         </div>
 
@@ -54,6 +118,158 @@
         </div>
     </div>
 
-    <script src="js/app.js"></script>
+    <script>
+        let currentLevel = 1;
+        let currentData = null;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLevel(currentLevel);
+            
+            document.getElementById('verify-btn').addEventListener('click', verifyAnswers);
+            document.getElementById('next-level-btn').addEventListener('click', nextLevel);
+            document.getElementById('prev-level-btn').addEventListener('click', prevLevel);
+            document.getElementById('modal-next-btn').addEventListener('click', nextLevel);
+            document.getElementById('back-to-directory-btn').addEventListener('click', function() {
+                window.location.href = '../../index.html';
+            });
+        });
+        
+        function loadLevel(levelNum) {
+            const data = getCrosswordLevel(levelNum);
+            if (!data || !data.success) {
+                alert('Failed to load level ' + levelNum);
+                return;
+            }
+            
+            currentData = data.data;
+            currentLevel = levelNum;
+            
+            document.getElementById('current-level').textContent = levelNum;
+            document.getElementById('level-theme').textContent = currentData.theme;
+            document.getElementById('level-difficulty').textContent = currentData.difficulty;
+            
+            renderBoard();
+            renderClues();
+            updateButtons();
+        }
+        
+        function renderBoard() {
+            const board = document.getElementById('board');
+            board.innerHTML = '';
+            board.style.gridTemplateColumns = `repeat(${currentData.gridSize}, 40px)`;
+            
+            const grid = [];
+            for (let i = 0; i < currentData.gridSize; i++) {
+                grid[i] = Array(currentData.gridSize).fill(null);
+            }
+            
+            currentData.across.forEach(clue => {
+                for (let i = 0; i < clue.length; i++) {
+                    grid[clue.row][clue.col + i] = {
+                        type: 'across',
+                        clueNum: clue.number,
+                        letter: ''
+                    };
+                }
+            });
+            
+            currentData.down.forEach(clue => {
+                for (let i = 0; i < clue.length; i++) {
+                    if (!grid[clue.row + i]) grid[clue.row + i] = [];
+                    if (!grid[clue.row + i][clue.col]) {
+                        grid[clue.row + i][clue.col] = {
+                            type: 'down',
+                            clueNum: clue.number,
+                            letter: ''
+                        };
+                    } else {
+                        grid[clue.row + i][clue.col].type = 'both';
+                    }
+                }
+            });
+            
+            for (let row = 0; row < currentData.gridSize; row++) {
+                for (let col = 0; col < currentData.gridSize; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    
+                    if (grid[row] && grid[row][col]) {
+                        const cellData = grid[row][col];
+                        cell.innerHTML = `
+                            <div class="cell-number">${cellData.clueNum}</div>
+                            <input type="text" maxlength="1" data-row="${row}" data-col="${col}">
+                        `;
+                    } else {
+                        cell.style.background = '#333';
+                    }
+                    
+                    board.appendChild(cell);
+                }
+            }
+        }
+        
+        function renderClues() {
+            const acrossList = document.getElementById('across-clues');
+            const downList = document.getElementById('down-clues');
+            
+            acrossList.innerHTML = '';
+            downList.innerHTML = '';
+            
+            currentData.across.forEach(clue => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${clue.number}.</strong> ${clue.clue} (${clue.length} letters)`;
+                acrossList.appendChild(li);
+            });
+            
+            currentData.down.forEach(clue => {
+                const li = document.createElement('li');
+                li.innerHTML = `<strong>${clue.number}.</strong> ${clue.clue} (${clue.length} letters)`;
+                downList.appendChild(li);
+            });
+        }
+        
+        function verifyAnswers() {
+            const inputs = document.querySelectorAll('#board input');
+            const userAnswers = [];
+            
+            inputs.forEach(input => {
+                userAnswers.push({
+                    row: parseInt(input.dataset.row),
+                    col: parseInt(input.dataset.col),
+                    letter: input.value.toUpperCase()
+                });
+            });
+            
+            const result = verifyAnswerLocal(currentLevel, userAnswers);
+            
+            if (result.success) {
+                document.getElementById('success-level').textContent = currentLevel;
+                document.getElementById('success-score').textContent = result.data.percentage;
+                document.getElementById('success-modal').style.display = 'block';
+                
+                if (result.data.completed) {
+                    document.getElementById('next-level-btn').disabled = false;
+                }
+            }
+        }
+        
+        function nextLevel() {
+            document.getElementById('success-modal').style.display = 'none';
+            currentLevel++;
+            loadLevel(currentLevel);
+        }
+        
+        function prevLevel() {
+            if (currentLevel > 1) {
+                currentLevel--;
+                loadLevel(currentLevel);
+            }
+        }
+        
+        function updateButtons() {
+            document.getElementById('prev-level-btn').style.display = currentLevel > 1 ? 'inline-block' : 'none';
+            document.getElementById('next-level-btn').disabled = true;
+        }
+    </script>
 </body>
 </html>
