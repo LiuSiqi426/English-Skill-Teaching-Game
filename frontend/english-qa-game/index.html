@@ -6,7 +6,6 @@
     <title>English QA Game - English Skill Teaching Game</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen&display=swap" rel="stylesheet">
-    <script src="game-data.js"></script>
 </head>
 <body>
     <div id="app"></div>
@@ -57,7 +56,7 @@
             `;
             
             document.getElementById('main-menu-btn').addEventListener('click', function() {
-                window.location.href = '../../index.html';
+                window.location.href = '/';
             });
             
             document.querySelectorAll('.play-btn').forEach(btn => {
@@ -73,13 +72,20 @@
             currentQuestion = 0;
             score = 0;
             
-            const data = getGameData(scene);
-            
-            if (data.success) {
-                questions = data.data.questions;
-                showQuestion();
-            } else {
-                alert('Failed to load game data.');
+            try {
+                const response = await fetch(`/api/conversation/scenes/${scene}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    questions = data.data.questions;
+                    showQuestion();
+                } else {
+                    alert('Failed to load game data: ' + data.error);
+                    showSceneSelection();
+                }
+            } catch (error) {
+                console.error('Error loading game:', error);
+                alert('Failed to load game. Please try again.');
                 showSceneSelection();
             }
         }
@@ -181,7 +187,19 @@
             
             nextBtn.disabled = false;
             
-            await submitAnswerLocal(currentScene, currentQuestion + 1, optionId);
+            try {
+                await fetch('/api/conversation/submit-answer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        sceneId: currentScene,
+                        questionId: currentQuestion + 1,
+                        selectedOptionId: optionId
+                    })
+                });
+            } catch (error) {
+                console.error('Error submitting answer:', error);
+            }
         }
         
         function nextQuestion() {
@@ -196,66 +214,117 @@
         async function showResults() {
             const app = document.getElementById('app');
             
-            const result = await calculateResultLocal(score, questions.length);
-            
-            app.innerHTML = `
-                <div class="game-container">
-                    <header class="game-header">
-                        <h1>Game Completed! 🎉</h1>
-                        <button id="results-back-btn" class="pixel-btn back-btn">← Back to Scenes</button>
-                    </header>
-                    
-                    <div class="results-container">
-                        <div class="score-circle">
-                            <div class="score-number">${score}</div>
-                            <div class="score-total">/100</div>
-                        </div>
+            try {
+                const response = await fetch('/api/conversation/calculate-result', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        score: score,
+                        totalQuestions: questions.length
+                    })
+                });
+                
+                const result = await response.json();
+                
+                app.innerHTML = `
+                    <div class="game-container">
+                        <header class="game-header">
+                            <h1>Game Completed! 🎉</h1>
+                            <button id="results-back-btn" class="pixel-btn back-btn">← Back to Scenes</button>
+                        </header>
                         
-                        <div class="results-message">
-                            <h2>${result.data?.message || 'Great job!'}</h2>
-                            <p>You answered ${Math.floor(score/10)} out of ${questions.length} questions correctly!</p>
-                        </div>
-                        
-                        <div class="star-rating">
-                            ${[1, 2, 3].map(star => `
-                                <div class="star ${star <= (result.data?.stars || 0) ? 'active' : 'inactive'}">⭐</div>
-                            `).join('')}
-                        </div>
-                        
-                        <div class="results-stats">
-                            <div class="stat">
-                                <div class="stat-value">${Math.floor(score/10)}</div>
-                                <div class="stat-label">Correct</div>
+                        <div class="results-container">
+                            <div class="score-circle">
+                                <div class="score-number">${score}</div>
+                                <div class="score-total">/100</div>
                             </div>
-                            <div class="stat">
-                                <div class="stat-value">${questions.length - Math.floor(score/10)}</div>
-                                <div class="stat-label">Incorrect</div>
+                            
+                            <div class="results-message">
+                                <h2>${result.data?.message || 'Great job!'}</h2>
+                                <p>You answered ${Math.floor(score/10)} out of ${questions.length} questions correctly!</p>
                             </div>
-                            <div class="stat">
-                                <div class="stat-value">${questions.length}</div>
-                                <div class="stat-label">Total</div>
+                            
+                            <div class="star-rating">
+                                ${[1, 2, 3].map(star => `
+                                    <div class="star ${star <= (result.data?.stars || 0) ? 'active' : 'inactive'}">⭐</div>
+                                `).join('')}
                             </div>
-                        </div>
-                        
-                        <div class="action-buttons">
-                            <button id="play-again-btn" class="pixel-btn play-again-btn">Play Again</button>
-                            <button id="choose-another-btn" class="pixel-btn back-to-scenes-btn">Choose Another Scene</button>
+                            
+                            <div class="results-stats">
+                                <div class="stat">
+                                    <div class="stat-value">${Math.floor(score/10)}</div>
+                                    <div class="stat-label">Correct</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">${questions.length - Math.floor(score/10)}</div>
+                                    <div class="stat-label">Incorrect</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">${questions.length}</div>
+                                    <div class="stat-label">Total</div>
+                                </div>
+                            </div>
+                            
+                            <div class="action-buttons">
+                                <button id="play-again-btn" class="pixel-btn play-again-btn">Play Again</button>
+                                <button id="choose-another-btn" class="pixel-btn back-to-scenes-btn">Choose Another Scene</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-            
-            document.getElementById('results-back-btn').addEventListener('click', function() {
-                showSceneSelection();
-            });
-            
-            document.getElementById('play-again-btn').addEventListener('click', function() {
-                startGame(currentScene);
-            });
-            
-            document.getElementById('choose-another-btn').addEventListener('click', function() {
-                showSceneSelection();
-            });
+                `;
+                
+                document.getElementById('results-back-btn').addEventListener('click', function() {
+                    showSceneSelection();
+                });
+                
+                document.getElementById('play-again-btn').addEventListener('click', function() {
+                    startGame(currentScene);
+                });
+                
+                document.getElementById('choose-another-btn').addEventListener('click', function() {
+                    showSceneSelection();
+                });
+                
+            } catch (error) {
+                console.error('Error showing results:', error);
+                app.innerHTML = `
+                    <div class="game-container">
+                        <header class="game-header">
+                            <h1>Game Completed! 🎉</h1>
+                            <button id="results-back-btn" class="pixel-btn back-btn">← Back to Scenes</button>
+                        </header>
+                        
+                        <div class="results-container">
+                            <div class="score-circle">
+                                <div class="score-number">${score}</div>
+                                <div class="score-total">/100</div>
+                            </div>
+                            
+                            <div class="results-message">
+                                <h2>Great job!</h2>
+                                <p>You answered ${Math.floor(score/10)} out of ${questions.length} questions correctly!</p>
+                            </div>
+                            
+                            <div class="action-buttons">
+                                <button id="play-again-btn" class="pixel-btn play-again-btn">Play Again</button>
+                                <button id="choose-another-btn" class="pixel-btn back-to-scenes-btn">Choose Another Scene</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('results-back-btn').addEventListener('click', function() {
+                    showSceneSelection();
+                });
+                
+                document.getElementById('play-again-btn').addEventListener('click', function() {
+                    startGame(currentScene);
+                });
+                
+                document.getElementById('choose-another-btn').addEventListener('click', function() {
+                    showSceneSelection();
+                });
+            }
         }
         
         function getSceneTitle(scene) {
