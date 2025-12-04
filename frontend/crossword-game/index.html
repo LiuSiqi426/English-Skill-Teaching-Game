@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Crossword Game</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #4a86e8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WORD CROSSWORD</h1>
+        
+        <div class="level-info">
+            <h2>Level <span id="current-level">1</span>: <span id="level-theme">Loading...</span></h2>
+            <p>Difficulty: <span id="level-difficulty">1</span>/5</p>
+        </div>
+
+        <div class="board-container">
+            <div id="board" class="board"></div>
+        </div>
+
+        <div class="clues-container">
+            <div class="clues-section">
+                <h3>Across</h3>
+                <ul id="across-clues"></ul>
+            </div>
+            <div class="clues-section">
+                <h3>Down</h3>
+                <ul id="down-clues"></ul>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="verify-btn" class="pixel-button">✓ Verify Answer</button>
+            <button id="next-level-btn" class="pixel-button" disabled>➤ Next Level</button>
+            <button id="prev-level-btn" class="pixel-button" style="display: none;">◀ Previous Level</button>
+            <button id="back-to-directory-btn" class="pixel-button">🏠 Back to Home</button>
+        </div>
+
+        <div id="success-modal" class="modal">
+            <div class="modal-content">
+                <h2>🎉 Congratulations! 🎉</h2>
+                <p>You completed Level <span id="success-level">1</span>!</p>
+                <p>Score: <span id="success-score">100</span>%</p>
+                <button id="modal-next-btn" class="pixel-button">➤ Go to Next Level</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

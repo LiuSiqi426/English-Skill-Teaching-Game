@@ -1,0 +1,107 @@
+{
+  "scene": "hotel",
+  "title": "Hotel Check-in & Check-out",
+  "description": "Practice English conversations for hotel stays",
+  "questions": [
+    {
+      "id": 1,
+      "speaker": "Receptionist",
+      "text": "Good afternoon, do you have a reservation?",
+      "options": [
+        {"id": "A", "text": "I'd like a medium pizza.", "correct": false},
+        {"id": "B", "text": "Yes, under the name of Johnson.", "correct": true},
+        {"id": "C", "text": "The penguins are swimming.", "correct": false}
+      ]
+    },
+    {
+      "id": 2,
+      "speaker": "Receptionist",
+      "text": "How many nights will you be staying?",
+      "options": [
+        {"id": "A", "text": "The tigers are running.", "correct": false},
+        {"id": "B", "text": "I want to order dessert.", "correct": false},
+        {"id": "C", "text": "Three nights, please.", "correct": true}
+      ]
+    },
+    {
+      "id": 3,
+      "speaker": "Receptionist",
+      "text": "Would you like a room with a view?",
+      "options": [
+        {"id": "A", "text": "Yes, if possible. How much extra is it?", "correct": true},
+        {"id": "B", "text": "I need more ketchup.", "correct": false},
+        {"id": "C", "text": "The zebras have stripes.", "correct": false}
+      ]
+    },
+    {
+      "id": 4,
+      "speaker": "Receptionist",
+      "text": "Breakfast is served from 7 to 10 AM.",
+      "options": [
+        {"id": "A", "text": "Thank you for letting me know.", "correct": true},
+        {"id": "B", "text": "I want to see the menu.", "correct": false},
+        {"id": "C", "text": "The bears are eating honey.", "correct": false}
+      ]
+    },
+    {
+      "id": 5,
+      "speaker": "Receptionist",
+      "text": "Your room is 305 on the third floor.",
+      "options": [
+        {"id": "A", "text": "The kangaroos are jumping.", "correct": false},
+        {"id": "B", "text": "I'll have the fish.", "correct": false},
+        {"id": "C", "text": "Thank you. Where are the elevators?", "correct": true}
+      ]
+    },
+    {
+      "id": 6,
+      "speaker": "Receptionist",
+      "text": "What time would you like a wake-up call?",
+      "options": [
+        {"id": "A", "text": "I'd like my steak well-done.", "correct": false},
+        {"id": "B", "text": "7 AM would be perfect, thank you.", "correct": true},
+        {"id": "C", "text": "The parrots are colorful.", "correct": false}
+      ]
+    },
+    {
+      "id": 7,
+      "speaker": "Receptionist",
+      "text": "Is everything satisfactory with your room?",
+      "options": [
+        {"id": "A", "text": "Yes, everything is fine, thank you.", "correct": true},
+        {"id": "B", "text": "I'll have coffee after dinner.", "correct": false},
+        {"id": "C", "text": "The snakes are dangerous.", "correct": false}
+      ]
+    },
+    {
+      "id": 8,
+      "speaker": "Receptionist",
+      "text": "Would you like to extend your stay?",
+      "options": [
+        {"id": "A", "text": "The hippos are in the water.", "correct": false},
+        {"id": "B", "text": "I need more napkins.", "correct": false},
+        {"id": "C", "text": "No, I'll be checking out tomorrow.", "correct": true}
+      ]
+    },
+    {
+      "id": 9,
+      "speaker": "Receptionist",
+      "text": "What time will you be checking out?",
+      "options": [
+        {"id": "A", "text": "The monkeys are playing.", "correct": false},
+        {"id": "B", "text": "I want to try the chocolate cake.", "correct": false},
+        {"id": "C", "text": "Around 11 AM, if that's okay.", "correct": true}
+      ]
+    },
+    {
+      "id": 10,
+      "speaker": "Receptionist",
+      "text": "Here is your bill. How would you like to pay?",
+      "options": [
+        {"id": "A", "text": "I'd like a table for two.", "correct": false},
+        {"id": "B", "text": "By credit card, please. Thank you for everything.", "correct": true},
+        {"id": "C", "text": "The elephants are huge.", "correct": false}
+      ]
+    }
+  ]
+}

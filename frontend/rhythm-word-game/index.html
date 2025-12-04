@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Word Game - English Learning</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="game-wrapper">
+            <div id="startScreen" class="start-screen">
+                <div class="start-container">
+                    <div class="nav-buttons">
+                        <button id="homeButtonStart" class="pixel-button home-button">MAIN MENU</button>
+                    </div>
+                    
+                    <div class="game-title">🎵 Rhythm Word Game 🎵</div>
+
+                    <div class="game-card">
+                        <h2 class="card-title">Game Rules</h2>
+
+                        <div class="rules-list">
+                            <div class="rule-item">
+                                <span class="rule-icon">🎯</span>
+                                <div class="rule-text">
+                                    <strong>Target Word</strong>
+                                    <div class="rule-desc">An Emoji of the target word is shown at the top. You need to hit the matching English word.</div>
+                                </div>
+                            </div>
+
+                            <div class="rule-item">
+                                <span class="rule-icon">⌨️</span>
+                                <div class="rule-text">
+                                    <strong>Controls</strong>
+                                    <div class="rule-desc">Use A S D F keys for the 4 lanes</div>
+                                    <div class="key-buttons">
+                                        <button class="pixel-button key-btn">A</button>
+                                        <button class="pixel-button key-btn">S</button>
+                                        <button class="pixel-button key-btn">D</button>
+                                        <button class="pixel-button key-btn">F</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="rule-item">
+                                <span class="rule-icon">⭐</span>
+                                <div class="rule-text">
+                                    <strong>Scoring</strong>
+                                    <div class="rule-desc">Correct hit: +100 points • Combo bonus • Wrong hit or miss: Lose life</div>
+                                </div>
+                            </div>
+
+                            <div class="rule-item">
+                                <span class="rule-icon">❤️</span>
+                                <div class="rule-text">
+                                    <strong>Life System</strong>
+                                    <div class="rule-desc">Start with 3 hearts • Wrong hit or missing the correct word costs a life</div>
+                                </div>
+                            </div>
+
+                            <div class="rule-item">
+                                <span class="rule-icon">🏆</span>
+                                <div class="rule-text">
+                                    <strong>Goal</strong>
+                                    <div class="rule-desc">Achieve the highest score and longest combo possible</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tips">
+                            <div class="tip-item">🎮 <strong>Tip:</strong> Try to maintain combos for extra points!</div>
+                            <div class="tip-item">🎵 <strong>Tip:</strong> Correct words appear more frequently than wrong ones!</div>
+                        </div>
+
+                        <button id="startButton" class="pixel-button start-button">
+                            <span class="button-text">Start Game</span>
+                            <span class="button-hint">Press any key to start</span>
+                        </button>
+
+                        <div class="back-section">
+                            <button id="backButton" class="pixel-button back-button">← Back to Menu</button>
+                        </div>
+
+                        <div class="credits">
+                            Pixel-style rhythm game • Test your reflexes and vocabulary!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gameContainer" class="hidden">
+                <div class="nav-buttons">
+                    <button id="homeButtonGame" class="pixel-button home-button">MAIN MENU</button>
+                </div>
+                
+                <div id="title">🎵 Rhythm Word Game 🎵</div>
+
+                <div id="targetArea">
+                    <div id="targetCard">
+                        <div class="target-label">FIND WORD:</div>
+                        <div id="targetEmoji" class="target-emoji">🍎</div>
+                        <div class="english-hint">apple</div>
+                    </div>
+                </div>
+
+                <div id="gameInfo">
+                    <div class="info-card" id="scoreCard">
+                        <div>SCORE: <span id="score">0</span></div>
+                        <div>COMBO: <span id="combo">0</span></div>
+                        <div>MAX COMBO: <span id="maxCombo">0</span></div>
+                    </div>
+
+                    <div class="info-card" id="lifeCard">
+                        <div>LIVES: </div>
+                        <div id="lives">
+                            <span class="heart">❤️</span>
+                            <span class="heart">❤️</span>
+                            <span class="heart">❤️</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="gameArea">
+                    <div id="lanesContainer">
+                        <div class="lane" data-lane="0">
+                            <div class="lane-number">LANE 1 (A)</div>
+                            <div class="lane-content" id="lane0"></div>
+                            <div class="key-label">A</div>
+                        </div>
+                        <div class="lane" data-lane="1">
+                            <div class="lane-number">LANE 2 (S)</div>
+                            <div class="lane-content" id="lane1"></div>
+                            <div class="key-label">S</div>
+                        </div>
+                        <div class="lane" data-lane="2">
+                            <div class="lane-number">LANE 3 (D)</div>
+                            <div class="lane-content" id="lane2"></div>
+                            <div class="key-label">D</div>
+                        </div>
+                        <div class="lane" data-lane="3">
+                            <div class="lane-number">LANE 4 (F)</div>
+                            <div class="lane-content" id="lane3"></div>
+                            <div class="key-label">F</div>
+                        </div>
+                    </div>
+
+                    <div id="judgmentArea"></div>
+
+                    <div id="judgmentLine">
+                        <div id="judgmentText">★ HIT HERE ★</div>
+                    </div>
+                </div>
+
+                <div id="comboEffect"></div>
+
+                <div id="gameOverScreen" class="hidden">
+                    <div class="game-over-card">
+                        <h2>GAME OVER</h2>
+                        <div class="final-stats">
+                            <div>FINAL SCORE: <span id="finalScore">0</span></div>
+                            <div>MAX COMBO: <span id="finalMaxCombo">0</span></div>
+                        </div>
+                        <button id="restartButton" class="pixel-button">PRESS R TO RESTART</button>
+                        <button id="menuButton" class="pixel-button menu-button">BACK TO MENU</button>
+                    </div>
+                </div>
+
+                <div id="controlHint">
+                    USE A S D F KEYS FOR LANES • CLICK TO FOCUS
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/game.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const homeButtonStart = document.getElementById('homeButtonStart');
+            const homeButtonGame = document.getElementById('homeButtonGame');
+            const backButton = document.getElementById('backButton');
+            const menuButton = document.getElementById('menuButton');
+            
+            function goToMainMenu() {
+                window.location.href = '../../index.html';
+            }
+            
+            if (homeButtonStart) {
+                homeButtonStart.addEventListener('click', goToMainMenu);
+            }
+            
+            if (homeButtonGame) {
+                homeButtonGame.addEventListener('click', goToMainMenu);
+            }
+            
+            if (backButton) {
+                backButton.addEventListener('click', goToMainMenu);
+            }
+            
+            if (menuButton) {
+                menuButton.addEventListener('click', goToMainMenu);
+            }
+            
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' || e.key === 'Esc') {
+                    goToMainMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{
+  "scene": "zoo",
+  "title": "Zoo Visit",
+  "description": "Practice English conversations at the zoo",
+  "questions": [
+    {
+      "id": 1,
+      "speaker": "Ticket Seller",
+      "text": "Good morning! How many tickets would you like?",
+      "options": [
+        {"id": "A", "text": "Two adults and one child, please.", "correct": true},
+        {"id": "B", "text": "I want to check into my room.", "correct": false},
+        {"id": "C", "text": "The steak was delicious.", "correct": false}
+      ]
+    },
+    {
+      "id": 2,
+      "speaker": "Zoo Guide",
+      "text": "The lions are feeding at 2 PM if you're interested.",
+      "options": [
+        {"id": "A", "text": "That sounds interesting. Where is the lion enclosure?", "correct": true},
+        {"id": "B", "text": "I need extra pillows.", "correct": false},
+        {"id": "C", "text": "The wine list is extensive.", "correct": false}
+      ]
+    },
+    {
+      "id": 3,
+      "speaker": "Zoo Staff",
+      "text": "Would you like a map of the zoo?",
+      "options": [
+        {"id": "A", "text": "Yes, that would be very helpful. Thank you!", "correct": true},
+        {"id": "B", "text": "I'd like to make a reservation.", "correct": false},
+        {"id": "C", "text": "The room service is excellent.", "correct": false}
+      ]
+    },
+    {
+      "id": 4,
+      "speaker": "Parent",
+      "text": "Look at the monkeys! They're so active.",
+      "options": [
+        {"id": "A", "text": "I want to order dessert.", "correct": false},
+        {"id": "B", "text": "They're playing with each other. How cute!", "correct": true},
+        {"id": "C", "text": "My reservation is under Smith.", "correct": false}
+      ]
+    },
+    {
+      "id": 5,
+      "speaker": "Child",
+      "text": "What's that animal over there?",
+      "options": [
+        {"id": "A", "text": "The special today is fish.", "correct": false},
+        {"id": "B", "text": "I need to check out at 11 AM.", "correct": false},
+        {"id": "C", "text": "That's a giraffe. It has a very long neck.", "correct": true}
+      ]
+    },
+    {
+      "id": 6,
+      "speaker": "Zoo Staff",
+      "text": "The aquarium is closing in 30 minutes.",
+      "options": [
+        {"id": "A", "text": "I want to extend my stay.", "correct": false},
+        {"id": "B", "text": "Thank you for letting us know. We'll head there now.", "correct": true},
+        {"id": "C", "text": "The bill is incorrect.", "correct": false}
+      ]
+    },
+    {
+      "id": 7,
+      "speaker": "Friend",
+      "text": "The elephants are enormous!",
+      "options": [
+        {"id": "A", "text": "My steak is too rare.", "correct": false},
+        {"id": "B", "text": "I'd like a wake-up call at 7 AM.", "correct": false},
+        {"id": "C", "text": "Yes, they're the largest land animals.", "correct": true}
+      ]
+    },
+    {
+      "id": 8,
+      "speaker": "Zoo Staff",
+      "text": "Please don't feed the animals.",
+      "options": [
+        {"id": "A", "text": "I need more towels in my room.", "correct": false},
+        {"id": "B", "text": "Of course, we understand. We won't feed them.", "correct": true},
+        {"id": "C", "text": "The dessert menu looks great.", "correct": false}
+      ]
+    },
+    {
+      "id": 9,
+      "speaker": "Child",
+      "text": "Can we see the penguins next?",
+      "options": [
+        {"id": "A", "text": "The room has a nice view.", "correct": false},
+        {"id": "B", "text": "I want to pay by cash.", "correct": false},
+        {"id": "C", "text": "Sure! Let's check the map for the penguin exhibit.", "correct": true}
+      ]
+    },
+    {
+      "id": 10,
+      "speaker": "Friend",
+      "text": "This has been a great day at the zoo!",
+      "options": [
+        {"id": "A", "text": "I agree! I really enjoyed seeing all the animals.", "correct": true},
+        {"id": "B", "text": "I need to make a hotel reservation.", "correct": false},
+        {"id": "C", "text": "The service was excellent.", "correct": false}
+      ]
+    }
+  ]
+}

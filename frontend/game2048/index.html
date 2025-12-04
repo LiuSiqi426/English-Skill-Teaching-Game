@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Evolution 2048</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ENGLISH EVOLUTION</h1>
+            <p class="description">SWIPE TO COMBINE ENGLISH SKILLS. UNLOCK FLUENCY!</p>
+        </header>
+        
+        <div class="back-button-container">
+            <button class="back-button" onclick="window.location.href='/'">
+                ← BACK TO MENU
+            </button>
+        </div>
+        
+        <div class="stats">
+            <div class="score-container">
+                <div class="score-label">SCORE</div>
+                <div class="score">0</div>
+            </div>
+            <div class="best-container">
+                <div class="best-label">BEST</div>
+                <div class="best">0</div>
+            </div>
+        </div>
+        
+        <div class="game-container">
+            <div class="grid">
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+                <div class="grid-cell"></div>
+            </div>
+            
+            <div class="game-message">
+                <p></p>
+                <button class="restart-button">TRY AGAIN</button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="restart-button">NEW GAME</button>
+            <button class="undo-button">UNDO</button>
+        </div>
+        
+        <div class="instructions">
+            <h2>HOW TO PLAY</h2>
+            <p>USE <strong>ARROW KEYS</strong> OR <strong>SWIPE</strong> TO MOVE TILES</p>
+            <p>WHEN TWO SAME ENGLISH SKILLS TOUCH, THEY MERGE INTO ONE!</p>
+            <p>GOAL: CREATE <span style="color: #ffeb3b;">"FLUENT ENGLISH"</span>!</p>
+            <p style="font-size: 0.6rem; margin-top: 10px; color: #4cc9f0;">
+                SKILL PATH: LETTERS → WORDS → SENTENCES → CONVERSATION → GRAMMAR → READING → WRITING → FLUENT
+            </p>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+{
+  "scene": "restaurant",
+  "title": "Restaurant Dining",
+  "description": "Practice English conversations in a restaurant setting",
+  "questions": [
+    {
+      "id": 1,
+      "speaker": "Waiter",
+      "text": "Good evening, do you have a reservation?",
+      "options": [
+        {"id": "A", "text": "I want to buy a book.", "correct": false},
+        {"id": "B", "text": "Yes, under the name of Smith.I want to buy a book.", "correct": true},
+        {"id": "C", "text": "No, I don't like it.", "correct": false}
+      ]
+    },
+    {
+      "id": 2,
+      "speaker": "Waiter",
+      "text": "Would you like to see the wine list?",
+      "options": [
+        {"id": "A", "text": "The weather is nice today.", "correct": false},
+        {"id": "B", "text": "I need a hotel room.", "correct": false},
+        {"id": "C", "text": "Yes, please. What do you recommend?", "correct": true}
+      ]
+    },
+    {
+      "id": 3,
+      "speaker": "Waiter",
+      "text": "Are you ready to order?",
+      "options": [
+        {"id": "A", "text": "My flight is at 3 PM.", "correct": false},
+        {"id": "B", "text": "I want to check out now.", "correct": false},
+        {"id": "C", "text": "Not yet, could we have a few more minutes?", "correct": true}
+      ]
+    },
+    {
+      "id": 4,
+      "speaker": "Waiter",
+      "text": "How would you like your steak cooked?",
+      "options": [
+        {"id": "A", "text": "The room is too cold.", "correct": false},
+        {"id": "B", "text": "I prefer coffee with milk.", "correct": false},
+        {"id": "C", "text": "Medium rare, please.", "correct": true}
+      ]
+    },
+    {
+      "id": 5,
+      "speaker": "Waiter",
+      "text": "Is everything alright with your meal?",
+      "options": [
+        {"id": "A", "text": "Yes, everything is perfect, thank you.", "correct": true},
+        {"id": "B", "text": "I need more towels in my room.", "correct": false},
+        {"id": "C", "text": "Where is the bus stop?", "correct": false}
+      ]
+    },
+    {
+      "id": 6,
+      "speaker": "Waiter",
+      "text": "Would you like any dessert?",
+      "options": [
+        {"id": "A", "text": "I want to extend my stay.", "correct": false},
+        {"id": "B", "text": "Yes, I'd like to see the dessert menu.", "correct": true},
+        {"id": "C", "text": "The elephant is very big.", "correct": false}
+      ]
+    },
+    {
+      "id": 7,
+      "speaker": "Waiter",
+      "text": "How would you like to pay?",
+      "options": [
+        {"id": "A", "text": "I want to make a reservation.", "correct": false},
+        {"id": "B", "text": "By credit card, please.", "correct": true},
+        {"id": "C", "text": "The lion is sleeping.", "correct": false}
+      ]
+    },
+    {
+      "id": 8,
+      "speaker": "Waiter",
+      "text": "Thank you for dining with us!",
+      "options": [
+        {"id": "A", "text": "Thank you, the food was excellent!", "correct": true},
+        {"id": "B", "text": "I need a wake-up call.", "correct": false},
+        {"id": "C", "text": "The monkeys are funny.", "correct": false}
+      ]
+    },
+    {
+      "id": 9,
+      "speaker": "Waiter",
+      "text": "Could I get you anything else?",
+      "options": [
+        {"id": "A", "text": "No, just the check please.", "correct": true},
+        {"id": "B", "text": "I lost my room key.", "correct": false},
+        {"id": "C", "text": "The giraffe has a long neck.", "correct": false}
+      ]
+    },
+    {
+      "id": 10,
+      "speaker": "Waiter",
+      "text": "Here is your bill. Would you like separate checks?",
+      "options": [
+        {"id": "A", "text": "My reservation is for two nights.", "correct": false},
+        {"id": "B", "text": "I want to see the animals.", "correct": false},
+        {"id": "C", "text": "No, we'll pay together.", "correct": true}
+      ]
+    }
+  ]
+}

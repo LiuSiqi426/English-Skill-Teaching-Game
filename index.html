@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Skill Teaching Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background: linear-gradient(180deg, #87CEEB 0%, #98FB98 100%);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .pixel-title {
+            font-family: 'Press Start 2P', cursive;
+            text-shadow: 3px 3px 0 #000;
+        }
+
+        .pixel-subtitle {
+            font-family: 'Press Start 2P', cursive;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        .mountain-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .mountain-range {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(180deg, transparent 0%, #2E8B57 100%);
+            border-radius: 50% 50% 0 0;
+        }
+
+        .far-mountains {
+            height: 40%;
+            background: linear-gradient(180deg, transparent 0%, #3CB371 100%);
+            opacity: 0.7;
+            transform: scale(1.2);
+        }
+
+        .mid-mountains {
+            height: 50%;
+            background: linear-gradient(180deg, transparent 0%, #228B22 100%);
+            opacity: 0.8;
+            transform: scale(1.1);
+        }
+
+        .near-mountains {
+            height: 60%;
+            background: linear-gradient(180deg, transparent 0%, #006400 100%);
+        }
+
+        .cabin {
+            position: absolute;
+            bottom: 20%;
+            left: 10%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .cabin-roof {
+            width: 120px;
+            height: 60px;
+            background: #8B4513;
+            clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+            margin-bottom: -5px;
+            position: relative;
+        }
+
+        .cabin-body {
+            width: 100px;
+            height: 80px;
+            background: #DEB887;
+            border: 4px solid #8B4513;
+            position: relative;
+        }
+
+        .cabin-door {
+            width: 30px;
+            height: 50px;
+            background: #8B4513;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .cabin-window {
+            width: 20px;
+            height: 20px;
+            background: #87CEEB;
+            border: 2px solid #8B4513;
+            position: absolute;
+            top: 20px;
+        }
+
+        .cabin-window.left { left: 10px; }
+        .cabin-window.right { right: 10px; }
+
+        .chimney {
+            width: 15px;
+            height: 40px;
+            background: #A0522D;
+            position: absolute;
+            top: -25px; 
+            right: 20px;
+            z-index: 2;
+        }
+
+        .tree {
+            position: absolute;
+            bottom: 20%;
+        }
+
+        .tree1 {
+            right: 20%;
+            width: 40px;
+            height: 80px;
+            background: #228B22;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .tree2 {
+            right: 30%;
+            width: 35px;
+            height: 70px;
+            background: #32CD32;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .tree3 {
+            right: 15%;
+            width: 45px;
+            height: 90px;
+            background: #006400;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50px;
+            opacity: 0.9;
+            animation: floatCloud 30s linear infinite;
+        }
+
+        .cloud1 {
+            width: 100px;
+            height: 40px;
+            top: 20%;
+            left: 10%;
+            animation-duration: 40s;
+        }
+
+        .cloud2 {
+            width: 80px;
+            height: 30px;
+            top: 30%;
+            right: 20%;
+            animation-duration: 35s;
+            animation-delay: -10s;
+        }
+
+        .cloud3 {
+            width: 120px;
+            height: 45px;
+            top: 15%;
+            right: 10%;
+            animation-duration: 50s;
+            animation-delay: -20s;
+        }
+
+        @keyframes floatCloud {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(calc(100vw + 100px)); }
+        }
+
+        .directory-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 6px solid #4a86e8;
+            border-radius: 12px;
+            box-shadow: 0 8px 0 #3a76d8;
+        }
+
+        .game-header h1 {
+            color: #4a86e8;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-shadow: 4px 4px 0 #c9daf8;
+        }
+
+        .game-header p {
+            color: #666;
+            font-size: 12px;
+            text-shadow: 1px 1px 0 #fff;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 4px solid;
+            border-radius: 16px;
+            padding: 30px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .game-card.available {
+            border-color: #4a86e8;
+            box-shadow: 0 8px 0 #3a76d8;
+        }
+
+        .game-card.coming-soon {
+            border-color: #999;
+            box-shadow: 0 8px 0 #777;
+            opacity: 0.8;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: inherit;
+        }
+
+        .game-card.available::before {
+            background: #4a86e8;
+        }
+
+        .game-card.coming-soon::before {
+            background: #999;
+        }
+
+        .game-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px auto;
+            border: 6px solid #3a76d8;
+            box-shadow: 0 6px 0 #2a66c8;
+            font-size: 48px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #4a86e8;
+            color: white;
+        }
+
+        .game-card.available .game-icon {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: rgba(46, 204, 113, 0.4);
+        }
+        
+        .game-card.coming-soon .game-icon {
+            background: rgba(149, 165, 166, 0.2);
+            border-color: rgba(149, 165, 166, 0.4);
+        }
+
+        .game-title {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0 #fff;
+            line-height: 1.4;
+        }
+
+        .game-description {
+            color: #666;
+            font-size: 11px;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pixel-button {
+            background: #4a86e8;
+            border: 4px solid #3a76d8;
+            color: white;
+            padding: 15px 30px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            display: inline-block;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .pixel-button:hover {
+            background: #5a96f8;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 0 #3a76d8;
+        }
+
+        .pixel-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 0 #3a76d8;
+        }
+
+        .pixel-button.disabled {
+            background: #999;
+            border-color: #777;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 6px 0 #666;
+        }
+
+        .pixel-button.disabled:hover {
+            background: #999;
+            transform: none;
+            box-shadow: 0 6px 0 #666;
+        }
+
+        @keyframes pixelClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+
+        .directory-footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 4px solid #4a86e8;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .game-header h1 {
+                font-size: 18px;
+            }
+            
+            .game-header p {
+                font-size: 10px;
+            }
+            
+            .game-icon {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
+            }
+            
+            .game-card {
+                padding: 25px 20px;
+                min-height: 280px;
+            }
+            
+            .cabin {
+                transform: scale(0.8) translateX(-50%);
+            }
+            
+            .tree {
+                transform: scale(0.8);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .directory-container {
+                padding: 10px;
+            }
+            
+            .game-card {
+                padding: 20px 15px;
+                min-height: 260px;
+            }
+            
+            .game-header {
+                padding: 20px;
+            }
+            
+            .game-header h1 {
+                font-size: 16px;
+            }
+            
+            .game-icon {
+                width: 90px;
+                height: 90px;
+                font-size: 36px;
+            }
+            
+            .game-title {
+                font-size: 14px;
+            }
+            
+            .game-description {
+                font-size: 10px;
+            }
+            
+            .pixel-button {
+                padding: 12px 24px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mountain-background">
+        <div class="mountain-range far-mountains"></div>
+        <div class="mountain-range mid-mountains"></div>
+        <div class="mountain-range near-mountains"></div>
+        
+        <div class="cabin">
+            <div class="cabin-roof"></div>
+            <div class="cabin-body">
+                <div class="cabin-door"></div>
+                <div class="cabin-window left"></div>
+                <div class="cabin-window right"></div>
+            </div>
+            <div class="chimney"></div>
+        </div>
+        
+        <div class="tree tree1"></div>
+        <div class="tree tree2"></div>
+        <div class="tree tree3"></div>
+        
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+    </div>
+
+    <div class="directory-container">
+        <header class="game-header">
+            <h1 class="pixel-title">ENGLISH SKILL TEACHING GAME</h1>
+            <p class="pixel-subtitle">Choose a game to improve your English!</p>
+        </header>
+
+        <div class="games-grid">
+            <!-- Game 1: Word Classification -->
+            <div class="game-card available" data-game="1">
+                <div class="game-icon">📚</div>
+                <h3 class="game-title">Word Classification</h3>
+                <p class="game-description">Drag words to correct categories</p>
+                <div class="pixel-button play-button" onclick="launchGame(1)">PLAY</div>
+            </div>
+
+            <!-- Game 2: Word Fusion 2048 -->
+            <div class="game-card available" data-game="2">
+                <div class="game-icon">🎮</div>
+                <h3 class="game-title">Word Fusion 2048</h3>
+                <p class="game-description">Combine skills to unlock abilities</p>
+                <div class="pixel-button play-button" onclick="launchGame(2)">PLAY</div>
+            </div>
+
+            <!-- Game 3: Crossword Game -->
+            <div class="game-card available" data-game="3">
+                <div class="game-icon">✏️</div>
+                <h3 class="game-title">Word Crossword</h3>
+                <p class="game-description">Solve crossword puzzles with English words</p>
+                <div class="pixel-button play-button" onclick="launchGame(3)">PLAY</div>
+            </div>
+
+            <!-- Game 4: Puzzle Game -->
+            <div class="game-card available" data-game="4">
+                <div class="game-icon">🧩</div>
+                <h3 class="game-title">Puzzle Game</h3>
+                <p class="game-description">Piece the word together</p>
+                <div class="pixel-button play-button" onclick="launchGame(4)">PLAY</div>
+            </div>
+
+            <!-- Game 5: Conversation Game -->
+            <div class="game-card available" data-game="5">
+                <div class="game-icon">💬</div>
+                <h3 class="game-title">Conversation Game</h3>
+                <p class="game-description">Practice real-life English conversations</p>
+                <div class="pixel-button play-button" onclick="launchGame(5)">PLAY</div>
+            </div>
+
+            <!-- Game 6: Rhythm Word -->
+            <div class="game-card available" data-game="6">
+                <div class="game-icon">🎵</div>
+                <h3 class="game-title">Rhythm Word</h3>
+                <p class="game-description">Hit correct words to the rhythm</p>
+                <div class="pixel-button play-button" onclick="launchGame(6)">PLAY</div>
+            </div>
+        </div>
+
+        <footer class="directory-footer">
+        </footer>
+    </div>
+
+    <script>
+        function launchGame(gameNumber) {
+            switch(gameNumber) {
+                case 1:
+                    window.location.href = '/words-classification';
+                    break;
+                case 2:
+                    window.location.href = '/game2048';
+                    break;
+                case 3:
+                    window.location.href = '/crossword';
+                    break;
+                case 4:
+                    window.location.href = '/puzzle-game';
+                    break;
+                case 5:
+                    window.location.href = '/english-qa-game';
+                    break;
+                case 6:
+                    window.location.href = '/rhythm-word-game';
+                    break;
+                default:
+                    alert('Game not available yet!');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const gameCards = document.querySelectorAll('.game-card');
+            
+            gameCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+                
+                card.addEventListener('click', function() {
+                    if (this.classList.contains('available')) {
+                        this.style.animation = 'pixelClick 0.3s';
+                        setTimeout(() => {
+                            this.style.animation = '';
+                        }, 300);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
